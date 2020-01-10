@@ -1,21 +1,21 @@
 %define kmod_name		oracleasm
 %define kmod_driver_version	2.0.8
-%define kmod_rpm_release	6
+%define kmod_rpm_release	13
 %define kmod_git_hash		efd88a855bdf07c38eda9ed510d08e4ae3de5f1d
-%define kmod_kernel_version	2.6.32-573.el6
-%define kernel_version		2.6.32-573.el6
+%define kmod_kernel_version	2.6.32-642.el6
+%define kernel_version		2.6.32-642.el6
 %define kmod_kbuild_dir		drivers/block/oracleasm/
 
 
 %{!?dist: %define dist .el6}
 
-Source0:	%{kmod_name}-%{kmod_driver_version}.tar.bz2			
-Source1:	%{kmod_name}.files			
-Source2:	depmodconf			
-Source3:	find-requires.ksyms			
-Source4:	find-provides.ksyms			
-Source5:	kmodtool			
-Source6:	symbols.greylist-x86_64			
+Source0:	%{kmod_name}-%{kmod_driver_version}.tar.bz2
+Source1:	%{kmod_name}.files
+Source2:	depmodconf
+Source3:	find-requires.ksyms
+Source4:	find-provides.ksyms
+Source5:	kmodtool
+Source6:	symbols.greylist-x86_64
 Source7:	oracleasm.preamble
 
 Patch0:		oracleasm.patch
@@ -109,9 +109,21 @@ fi
 rm -rf $RPM_BUILD_ROOT
 
 %changelog
-* Wed Nov 11 2015 Petr Oros <poros@redhat.com> 2.0.8-6
+* Thu Apr 14 2016 Petr Oros <poros@redhat.com> 2.0.8-13
+- rebuild oracleasm for rhel 6.8
+- Resolves: #1301989
+
+* Thu Mar 3 2016 Petr Oros <poros@redhat.com> 2.0.8-12
+- rebuild oracleasm for rhel 6.8
+- Resolves: #1301989
+
+* Tue Feb 23 2016 Petr Oros <poros@redhat.com> 2.0.8-11
+- rebuild oracleasm for rhel 6.8
+- Resolves: #1301989
+
+* Tue Nov 3 2015 Petr Oros <poros@redhat.com> 2.0.8-10
 - Classify device connectivity issues as global errors
-- Resolves: #1279998
+- Resolves: #1265215
 
 * Mon Jun 29 2015 Petr Oros <poros@redhat.com> 2.0.8.5
 - rebuild oracleasm for rhel 6.7
