@@ -1,9 +1,9 @@
 %define kmod_name		oracleasm
 %define kmod_driver_version	2.0.8
-%define kmod_rpm_release	13
+%define kmod_rpm_release	15
 %define kmod_git_hash		efd88a855bdf07c38eda9ed510d08e4ae3de5f1d
-%define kmod_kernel_version	2.6.32-642.el6
-%define kernel_version		2.6.32-642.el6
+%define kmod_kernel_version	2.6.32-696.el6
+%define kernel_version		2.6.32-696.el6
 %define kmod_kbuild_dir		drivers/block/oracleasm/
 
 
@@ -109,6 +109,14 @@ fi
 rm -rf $RPM_BUILD_ROOT
 
 %changelog
+* Mon Feb 27 2017 Petr Oros <poros@redhat.com> 2.0.8-15
+- rebuild oracleasm for rhel 6.9
+- Resolves: #1424971
+
+* Mon Feb 20 2017 Petr Oros <poros@redhat.com> 2.0.8-14
+- rebuild oracleasm for rhel 6.9
+- Resolves: #1424971
+
 * Thu Apr 14 2016 Petr Oros <poros@redhat.com> 2.0.8-13
 - rebuild oracleasm for rhel 6.8
 - Resolves: #1301989
