@@ -1,0 +1,24 @@
+---
+ drivers/block/oracleasm/Makefile |    2 +-
+ drivers/block/oracleasm/driver.c |    2 --
+ 2 files changed, 1 insertion(+), 3 deletions(-)
+
+--- a/drivers/block/oracleasm/Makefile
++++ b/drivers/block/oracleasm/Makefile
+@@ -1,4 +1,4 @@
+ 
+-obj-$(CONFIG_ORACLEASM) := oracleasm.o
++obj-m := oracleasm.o
+ oracleasm-y += driver.o  masklog.o  proc.o  transaction_file.o
+ oracleasm-$(CONFIG_BLK_DEV_INTEGRITY) += integrity.o
+--- a/drivers/block/oracleasm/driver.c
++++ b/drivers/block/oracleasm/driver.c
+@@ -130,8 +130,6 @@ static struct kmem_cache	*asmdisk_cachep
+ # define kapi_kmem_cache_create kmem_cache_create
+ #endif
+ 
+-#define queue_max_segments(a)   min(queue_max_hw_segments(a), queue_max_phys_segments(a))
+-
+ /*
+  * asmfs super-block data in memory
+  */

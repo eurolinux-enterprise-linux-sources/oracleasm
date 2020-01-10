@@ -1,0 +1,2 @@
+header-y += abi.h abi_compat.h compat32.h disk.h error.h kernel.h manager.h
+header-y += manager_compat.h module_version.h

@@ -1,0 +1,35 @@
+From 093f1aa2f13cf4d77374ded12161e832196da548 Mon Sep 17 00:00:00 2001
+From: "Martin K. Petersen" <martin.petersen@oracle.com>
+Date: Thu, 21 May 2015 17:42:15 -0400
+Subject: oracleasm: Classify device connectivity issues as global errors
+
+We used to set the ASM_LOCAL_ERROR qualifier when we got ENOLINK, EBADE
+or ENODEV status from the storage stack. The assumption was that the
+error could be caused by a pulled cable or a bad switch port and that
+other nodes in a cluster might still have access to the storage.
+
+The ASM team would prefer these types of errors to be treated as global,
+however, as this would be consistent with database behavior when ASMLIB
+is not in the picture.
+
+Remove the ASM_LOCAL_ERROR flag from the device connectivity error code
+path.
+
+Orabug: 20117903
+
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+
+diff --git a/drivers/block/oracleasm/driver.c b/drivers/block/oracleasm/driver.c
+index 7eb1707..94acab2 100644
+--- a/drivers/block/oracleasm/driver.c
++++ b/drivers/block/oracleasm/driver.c
+@@ -1239,7 +1239,6 @@ static void asm_end_ioc(struct asm_request *r, unsigned int bytes_done,
+		case -EBADE:
+		case -ENODEV:
+			r->r_error = ASM_ERR_NODEV;
+-			r->r_status |= ASM_LOCAL_ERROR;
+			break;
+
+		case -ENOMEM:
+--
+cgit v0.10.2

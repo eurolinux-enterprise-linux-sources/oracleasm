@@ -1,0 +1,3 @@
+Requires: kernel >= 2.6.32-573.el6
+Requires: kernel < 2.6.32-574.el6
+Provides: oracleasm = %{version}-%{release}

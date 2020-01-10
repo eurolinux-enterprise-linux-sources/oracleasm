@@ -1,0 +1,27 @@
+diff -Nuar oracleasm-2.0.8_bak/source/drivers/block/oracleasm/driver.c oracleasm-2.0.8/source/drivers/block/oracleasm/driver.c
+--- oracleasm-2.0.8_bak/source/drivers/block/oracleasm/driver.c	2014-10-27 15:15:33.384695810 +0800
++++ oracleasm-2.0.8/source/drivers/block/oracleasm/driver.c	2014-10-27 15:18:07.169237827 +0800
+@@ -321,14 +321,12 @@
+ # define kapi_init_asmdisk_once init_asmdisk_once
+ #endif
+ 
+-static void asmdisk_evict_inode(struct inode *inode)
++static void asmdisk_clear_inode(struct inode *inode)
+ {
+ 	struct asm_disk_info *d = ASMDISK_I(inode);
+ 
+ 	mlog_entry("(0x%p)\n", inode);
+ 
+-	clear_inode(inode);
+-
+ 	mlog_bug_on_msg(atomic_read(&d->d_ios),
+ 			"Disk 0x%p has outstanding I/Os\n", d);
+ 
+@@ -357,6 +355,7 @@
+ 	.alloc_inode		= asmdisk_alloc_inode,
+ 	.destroy_inode		= asmdisk_destroy_inode,
+ 	.drop_inode		= generic_delete_inode,
++	.clear_inode		= asmdisk_clear_inode,
+ };
+ 
+ 
