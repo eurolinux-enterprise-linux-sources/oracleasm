@@ -1,6 +1,6 @@
 %define kmod_name		oracleasm
 %define kmod_driver_version	2.0.8
-%define kmod_rpm_release	16.1
+%define kmod_rpm_release	16
 %define kmod_git_hash		efd88a855bdf07c38eda9ed510d08e4ae3de5f1d
 %define kmod_kernel_version	2.6.32-754.el6
 %define kernel_version		2.6.32-754.el6
@@ -21,7 +21,6 @@ Source7:	oracleasm.preamble
 Patch0:		oracleasm.patch
 Patch1:		oracleasm_add_clear_inode_callback.patch
 Patch2:		classify-device-connectivity-issues-as-global-errors.patch
-Patch3:		use-after-free-asm-request.patch
 
 %define __find_requires %_sourcedir/find-requires.ksyms
 %define __find_provides %_sourcedir/find-provides.ksyms %{kmod_name} %{?epoch:%{epoch}:}%{version}-%{release}
@@ -51,7 +50,6 @@ ExclusiveArch:  x86_64
 #%patch0 -p1
 %patch1 -p2
 %patch2 -p1
-%patch3 -p1
 
 set -- *
 mkdir source
@@ -111,12 +109,7 @@ fi
 rm -rf $RPM_BUILD_ROOT
 
 %changelog
-* Fri Feb 08 2019 Eugene Syromiatnikov <esyr@redhat.com> 2.0.8-16.1
-- Add "use-after-free-asm-request.patch"
-- (oracleasm: Fix use after free for request processing timer)
-- Resolves: #1673777
-
-* Wed Oct 03 2018 Eugene Syromiatnikov <esyr@redhat.com> 2.0.8-16
+* Wed Oct 03 2018 Eugene Syromiatnikov <esyr@redhat.com> 2.0.8-14
 - Rebuild oracleasm for rhel 6.10
 - Resolves: #1630539
 
