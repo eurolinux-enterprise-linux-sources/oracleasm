@@ -1,0 +1,16 @@
+diff -Nuar oracleasm-2.0.8_bak/drivers/block/oracleasm/masklog.c oracleasm-2.0.8/drivers/block/oracleasm/masklog.c
+--- oracleasm-2.0.8_bak/drivers/block/oracleasm/masklog.c	2014-12-01 14:38:40.095180114 +0800
++++ oracleasm-2.0.8/drivers/block/oracleasm/masklog.c	2014-12-01 14:39:41.827847472 +0800
+@@ -192,11 +192,9 @@
+ 	set_a_string(ERROR);
+ 	set_a_string(NOTICE);
+ 
+-	p = create_proc_entry(LOGMASK_PROC_NAME, S_IRUGO, parent);
++	p = proc_create(LOGMASK_PROC_NAME, S_IRUGO, parent, &mlog_seq_fops);
+ 	if (p == NULL)
+ 		return -ENOMEM;
+ 
+-	p->proc_fops = &mlog_seq_fops;
+-
+ 	return 0;
+ }
