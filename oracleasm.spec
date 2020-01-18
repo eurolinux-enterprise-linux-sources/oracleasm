@@ -1,9 +1,9 @@
 %define kmod_name		oracleasm
 %define kmod_driver_version	2.0.8
-%define kmod_rpm_release	21
+%define kmod_rpm_release	22.1
 %define kmod_git_hash		73eec1df4b6aec6e850db5015d74dbf6dee01e01
-%define kmod_kernel_version	3.10.0-862.el7
-%define kernel_version		3.10.0-862.el7
+%define kmod_kernel_version	3.10.0-957.el7
+%define kernel_version		3.10.0-957.el7
 %define kmod_kbuild_dir		drivers/block/oracleasm
 
 
@@ -20,6 +20,7 @@ Source7:	oracleasm.preamble
 
 Patch0:         oracleasm.patch
 Patch1:         classify-device-connectivity-issues-as-global-errors.patch
+Patch2:         use-after-free-asm-request.patch
 
 %define __find_requires %_sourcedir/find-requires.ksyms
 %define __find_provides %_sourcedir/find-provides.ksyms %{kmod_name} %{?epoch:%{epoch}:}%{version}-%{release}
@@ -48,6 +49,7 @@ ExclusiveArch:  x86_64
 %setup
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 set -- *
 mkdir source
@@ -107,6 +109,16 @@ fi
 rm -rf $RPM_BUILD_ROOT
 
 %changelog
+* Wed Feb 20 2019 Eugene Syromiatnikov <esyr@redhat.com> 2.0.8-22.1
+- For >= kernel-3.10.0-957.el7
+- Add "use-after-free-asm-request.patch"
+- (oracleasm: Fix use after free for request processing timer)
+- Resolves: #1679239
+
+* Tue Jun 19 2018 Eugene Syromiatnikov <esyr@redhat.com> 2.0.8-22
+- For >= kernel-3.10.0-907.el7
+- Resolves: #1568406
+
 * Thu Feb 22 2018 Petr Oros <poros@redhat.com> 2.0.8-21
 - For >= kernel-3.10.0-855.el7
 - Resolves: #1498103
