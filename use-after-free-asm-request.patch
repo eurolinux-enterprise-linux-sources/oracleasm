@@ -1,0 +1,42 @@
+From: "Gayatri Vasudevan" <gayatri.vasudevan@oracle.com>
+Date: Fri, 21 Dec 2018 11:45:15 -0800
+Subject: oracleasm: Fix use after free for request processing timer
+
+Update r->r_elapsed under the spinlock to avoid racing with the
+completion code freeing the asm_request.
+
+This change bas been backported from UEK4 from the following commit
+9897de3bb02964dff8d331a5c8a0d538392e4a3b
+"(oracleasm: Fix use after free for request processing timer)"
+
+Orabug: 28660867
+
+Signed-off-by: Gayatri Vasudevan <gayatri.vasudevan@oracle.com>
+Reviewed-by: Srinivas Eeda <srinivas.eeda@oracle.com>
+---
+source/drivers/block/oracleasm/driver.c | 3 +--
+1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/drivers/block/oracleasm/driver.c b/drivers/block/oracleasm/driver.c
+index 0488159..40a441b 100644
+--- a/drivers/block/oracleasm/driver.c
++++ b/drivers/block/oracleasm/driver.c
+@@ -1104,6 +1104,7 @@ static void asm_finish_io(struct asm_request *r)
+	if (r->r_error)
+		r->r_status |= ASM_ERROR;
+	r->r_status |= ASM_COMPLETED;
++	r->r_elapsed = ((jiffies - r->r_elapsed) * 1000000) / HZ;
+
+	spin_unlock_irqrestore(&afi->f_lock, flags);
+
+@@ -1117,8 +1118,6 @@ static void asm_finish_io(struct asm_request *r)
+		}
+	}
+
+-	r->r_elapsed = ((jiffies - r->r_elapsed) * 1000000) / HZ;
+-
+	mlog(ML_REQUEST, "Finished request 0x%p\n", r);
+
+	wake_up(&afi->f_wait);
+-- 
+1.8.3.1
