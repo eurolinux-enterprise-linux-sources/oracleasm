@@ -1,9 +1,9 @@
 %define kmod_name		oracleasm
 %define kmod_driver_version	2.0.8
-%define kmod_rpm_release	26
+%define kmod_rpm_release	19
 %define kmod_git_hash		73eec1df4b6aec6e850db5015d74dbf6dee01e01
-%define kmod_kernel_version	3.10.0-1062.el7
-%define kernel_version		3.10.0-1062.el7
+%define kmod_kernel_version	3.10.0-693.el7
+%define kernel_version		3.10.0-693.el7
 %define kmod_kbuild_dir		drivers/block/oracleasm
 
 
@@ -20,7 +20,6 @@ Source7:	oracleasm.preamble
 
 Patch0:         oracleasm.patch
 Patch1:         classify-device-connectivity-issues-as-global-errors.patch
-Patch2:         use-after-free-asm-request.patch
 
 %define __find_requires %_sourcedir/find-requires.ksyms
 %define __find_provides %_sourcedir/find-provides.ksyms %{kmod_name} %{?epoch:%{epoch}:}%{version}-%{release}
@@ -49,7 +48,6 @@ ExclusiveArch:  x86_64
 %setup
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 set -- *
 mkdir source
@@ -109,35 +107,6 @@ fi
 rm -rf $RPM_BUILD_ROOT
 
 %changelog
-* Mon Apr 29 2019 Eugene Syromiatnikov <esyr@redhat.com> 2.0.8-26
-- Revert the addition
-  of "oracleasm-claim-FMODE_EXCL-access-on-disk-during-asm.patch"
-  as it introduces regressions ("ERROR: -15 ... asm_open error
-  Operation not permitted").
-- Rebuilt against kernel-3.10.0-1043.el7
-- Resolves: #1700382
-
-* Tue Mar 12 2019 Eugene Syromiatnikov <esyr@redhat.com> 2.0.8-25
-- Add "oracleasm-claim-FMODE_EXCL-access-on-disk-during-asm.patch"
-- Resolves: #1684223
-
-* Tue Feb 05 2019 Eugene Syromiatnikov <esyr@redhat.com> 2.0.8-24
-- Add "use-after-free-asm-request.patch"
-- (oracleasm: Fix use after free for request processing timer)
-- Resolves: #1672733
-
-* Tue Jun 19 2018 Eugene Syromiatnikov <esyr@redhat.com> 2.0.8-22
-- For >= kernel-3.10.0-907.el7
-- Resolves: #1568406
-
-* Thu Feb 22 2018 Petr Oros <poros@redhat.com> 2.0.8-21
-- For >= kernel-3.10.0-855.el7
-- Resolves: #1498103
-
-* Tue Nov 14 2017 Petr Oros <poros@redhat.com> 2.0.8-20
-- For >= kernel-3.10.0-783.el7
-- Resolves: #1498103
-
 * Mon Jun 26 2017 Petr Oros <poros@redhat.com> 2.0.8-19
 - For >= kernel-3.10.0-685.el7
 - Resolves: #1441193
