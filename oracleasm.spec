@@ -1,9 +1,9 @@
 %define kmod_name		oracleasm
 %define kmod_driver_version	2.0.8
-%define kmod_rpm_release	21
+%define kmod_rpm_release	22
 %define kmod_git_hash		73eec1df4b6aec6e850db5015d74dbf6dee01e01
-%define kmod_kernel_version	3.10.0-862.el7
-%define kernel_version		3.10.0-862.el7
+%define kmod_kernel_version	3.10.0-957.el7
+%define kernel_version		3.10.0-957.el7
 %define kmod_kbuild_dir		drivers/block/oracleasm
 
 
@@ -107,6 +107,10 @@ fi
 rm -rf $RPM_BUILD_ROOT
 
 %changelog
+* Tue Jun 19 2018 Eugene Syromiatnikov <esyr@redhat.com> 2.0.8-22
+- For >= kernel-3.10.0-907.el7
+- Resolves: #1568406
+
 * Thu Feb 22 2018 Petr Oros <poros@redhat.com> 2.0.8-21
 - For >= kernel-3.10.0-855.el7
 - Resolves: #1498103
